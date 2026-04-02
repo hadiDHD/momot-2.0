@@ -12,14 +12,14 @@
 
    <url>
       <update label="MOMoT Update Site" url="http://martin-fleck.github.io/momot/eclipse/updates/"/>
-      <discovery label="Henshin" url="http://download.eclipse.org/modeling/emft/henshin/updates/release/"/>
-      <discovery label="Xtext" url="http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
+      <discovery label="Henshin" url="https://download.eclipse.org/modeling/emft/henshin/updates/release/"/>
+      <discovery label="Xtext" url="https://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/"/>
    </url>
 
    <requires>
       <import plugin="com.google.guava" version="15.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.apache.commons.lang" version="2.6.0" match="greaterOrEqual"/>
+      <import plugin="org.apache.commons.lang3" version="3.18.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.henshin.interpreter"/>
       <import plugin="org.eclipse.emf.henshin.statespace"/>
       <import plugin="org.eclipse.emf.henshin.model"/>

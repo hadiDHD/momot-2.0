@@ -1,6 +1,6 @@
 package at.ac.tuwien.big.momot.examples.tse.rdg;
 
-import org.apache.commons.lang.time.StopWatch;
+import org.apache.commons.lang3.time.StopWatch;
 import org.moeaframework.algorithm.NSGAII;
 import org.moeaframework.algorithm.RandomSearch;
 import org.moeaframework.algorithm.ReferencePointNondominatedSortingPopulation;

@@ -2,7 +2,7 @@ package at.ac.tuwien.big.momot.examples.tse.metric;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class Metrics implements Serializable {
 	private static final long serialVersionUID = 5269574577539403748L;

@@ -1,6 +1,6 @@
 package at.ac.tuwien.big.momot.examples.tse.momot.util;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.henshin.interpreter.EGraph;

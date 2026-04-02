@@ -7,7 +7,7 @@
   </properties>
   <children size='3'>
     <child location='momot/'/>
-    <child location='http://download.eclipse.org/modeling/emft/henshin/updates/release/'/>
-    <child location='http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/'/>
+    <child location='https://download.eclipse.org/modeling/emft/henshin/updates/release/'/>
+    <child location='https://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases/'/>
   </children>
 </repository>

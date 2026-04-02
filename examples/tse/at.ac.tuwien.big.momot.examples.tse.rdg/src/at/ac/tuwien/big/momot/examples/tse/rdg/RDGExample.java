@@ -6,7 +6,7 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.time.StopWatch;
+import org.apache.commons.lang3.time.StopWatch;
 import org.eclipse.emf.henshin.model.resource.HenshinResourceSet;
 import org.moeaframework.algorithm.NSGAII;
 import org.moeaframework.algorithm.RandomSearch;

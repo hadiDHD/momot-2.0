@@ -505,13 +505,6 @@
             menubarPath="debug"
             id="at.ac.tuwien.big.momot.lang.MOMoT.rulerContextMenu.enableDisableBreakpointAction">
          </action>
-         <action
-           label="Breakpoint Properties"
-           helpContextId="breakpoint_properties_action_context"
-           class="at.ac.tuwien.big.momot.lang.ui.MOMoTExecutableExtensionFactory:org.eclipse.jdt.debug.ui.actions.JavaBreakpointPropertiesRulerActionDelegate"
-           menubarPath="group.properties"
-           id="at.ac.tuwien.big.momot.lang.MOMoT.rulerContextMenu.openBreapointPropertiesAction">
-         </action>
       </viewerContribution>
    </extension>
     <!-- Introduce Local Variable Refactoring -->
@@ -589,75 +582,6 @@
     </fileTypes>
   </extension>
 
-	<extension
-         point="org.eclipse.debug.core.launchConfigurationTypes">
-      <launchConfigurationType
-            id="at.ac.tuwien.big.momot.lang.ui.MOMoTLaunchConfigurationType"
-            modes="run, debug"
-            name="MOMoT Search"
-            delegate="at.ac.tuwien.big.momot.lang.ui.launch.MOMoTLaunchDelegate"
-            sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
-            sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer"/>
-   </extension>
-   
-   <extension
-         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
-      <launchConfigurationTabGroup
-            class="at.ac.tuwien.big.momot.lang.ui.launch.MOMoTLaunchTabGroup"
-            id="at.ac.tuwien.big.momot.lang.ui.launch.MOMoTLaunchConfigurationTabGroup"
-            type="at.ac.tuwien.big.momot.lang.ui.MOMoTLaunchConfigurationType">
-            <launchMode 
-                  mode="debug"
-                  perspective="org.eclipse.debug.ui.DebugPerspective"
-                  description="Debug a MOMoT Orchestration File">
-            </launchMode>
-            <launchMode
-                  mode="run"
-                  description="Run a MOMoT Orchestration File">
-            </launchMode>
-      </launchConfigurationTabGroup>
-   </extension>
-
-   <extension
-         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
-      <launchConfigurationTypeImage
-            configTypeID="at.ac.tuwien.big.momot.lang.ui.MOMoTLaunchConfigurationType"
-            icon="icons/momot_16.png"
-            id="at.ac.tuwien.big.momot.lang.ui.MOMoTLaunchConfigurationTypeImage"/>
-   </extension>
-
-
-   <extension
-         point="org.eclipse.debug.ui.launchShortcuts">
-      <shortcut
-            class="at.ac.tuwien.big.momot.lang.ui.launch.MOMoTLaunchShortcut"
-            description="Launches a MOMoT Orchestration File"
-            icon="icons/momot_16.png"
-            id="at.ac.tuwien.big.momot.lang.ui.launch.shortcut1"
-            label="Run Search"
-            modes="run, debug">
-          <contextualLaunch>
-           <enablement>
-             <with variable="selection">
-               <count value="1"/>
-               <iterate
-                     ifEmpty="false"
-                     operator="and">
-                  <adapt type="org.eclipse.core.resources.IFile"/>
-                    <test property="org.eclipse.debug.ui.matchesPattern"
-                          value="*.momot"/>
-               </iterate>
-             </with>
-           </enablement>
-           <contextLabel
-              mode="run"
-              label="Run Search"/>
-          <contextLabel
-              mode="debug"
-              label="Run Search"/>
-         </contextualLaunch>
-      </shortcut>
-   </extension>
    <extension
          point="org.eclipse.ui.newWizards">
       <category

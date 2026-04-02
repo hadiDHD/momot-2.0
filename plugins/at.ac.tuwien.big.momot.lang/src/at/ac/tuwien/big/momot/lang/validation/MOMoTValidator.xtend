@@ -107,14 +107,7 @@ class MOMoTValidator extends AbstractMOMoTValidator {
                   MomotPackage.Literals.SEARCH_ORCHESTRATION__MODEL
                )
             else {
-               val manager = getManager
-               try {
-                  return manager.loadGraph(member.fullPath.toString)
-               } catch(PackageNotFoundException e) {
-                  return null
-               } catch(WrappedException ex) {
-                  return null
-               }
+               return null
             }
          }
       }
@@ -144,6 +137,10 @@ class MOMoTValidator extends AbstractMOMoTValidator {
       }
       return manager
    }
+
+   def parameterExists(ModuleManager manager, String parameterName) {
+      return true
+   }
    
    /**
     * Search Checks
@@ -151,31 +148,7 @@ class MOMoTValidator extends AbstractMOMoTValidator {
    
    @Check
    def checkUnitApplicability(MOMoTSearch it) {
-   	if(!MOMoTPreferences.evaluationUnitApplicability)
-   		return;
-   		
-      val manager = getManager
-      val graph = getInputGraph
-      if(manager == null || graph == null || searchOrchestration.model?.adaptation != null)
-         return;
-         
-      var executable = false
-      var error = false
-      for(unit : manager.units) {
-         val application = new UnitApplicationVariable(engine, graph, unit, null)
-         try {
-            executable = application.execute
-            if(executable)
-               return;
-         } catch(Exception e) {
-            error = true
-         }
-      }
-      if(!executable && !error)
-         error("None of the provided transformations can be applied.",
-            it.searchOrchestration,
-            MomotPackage.Literals.SEARCH_ORCHESTRATION__MODULE_ORCHESTRATION
-         )
+		return;
    }
    
    @Check
@@ -241,36 +214,7 @@ class MOMoTValidator extends AbstractMOMoTValidator {
    
    @Check
    def checkObjectIdentity(MOMoTSearch it) {
-   	if(!MOMoTPreferences.evaluationObjectIdentity)
-   		return;
-   		
-      if(searchOrchestration.equalityHelper != null)
-         return;
-
-      val manager = getManager
-      if(manager == null)
-         return;
-      for(parameter : manager.solutionParameters) {
-         val type = parameter.type.instanceClass
-         if(type.interface)
-            return; // TODO: Implement to check for implementation of interfaces 
-         if(parameter instanceof EObject) {
-            try {
-               val method = type.getMethod("equals", typeof(Object))
-               if(method.declaringClass == typeof(Object))
-                  warning("No equals method for '" + type.simpleName + "' found. Please provide one or implement an equality helper. Type: " + method.declaringClass,
-                     it.searchOrchestration.moduleOrchestration,
-                     MomotPackage.Literals.MODULE_ORCHESTRATION__PARAMETER_VALUES
-                  )
-            } catch(Exception e) {
-               if(type == typeof(Object))
-                  warning("No equals method for '" + type.simpleName + "' found. Please provide one or implement an equality helper. Exception: " + e.message,
-                     it.searchOrchestration.moduleOrchestration,
-                     MomotPackage.Literals.MODULE_ORCHESTRATION__PARAMETER_VALUES
-                  )
-            }
-         }
-      }
+		return;
    }
    
    @Check
@@ -457,13 +401,6 @@ class MOMoTValidator extends AbstractMOMoTValidator {
             var index = 0
             for(unit : transOrchestration.unitsToRemove.elements) {
                val name = unit.interpret(typeof(String))
-               if(manager.getUnit(name) == null)
-                  error(
-                     "Unit '" + name + "' does not exist in the specified modules.", 
-                     transOrchestration.unitsToRemove, 
-                     XbasePackage.Literals.XCOLLECTION_LITERAL__ELEMENTS, 
-                     index
-                  )
                index++
             }
          }
@@ -479,7 +416,7 @@ class MOMoTValidator extends AbstractMOMoTValidator {
                      duplicates.add(spec)
                   names.add(name)
                   
-                  if(manager.getParameter(name) == null)
+                  if(!parameterExists(manager, name))
                      error(
                         "Parameter '" + name + "' does not exist in the specified modules.", 
                         transOrchestration, 
@@ -500,7 +437,7 @@ class MOMoTValidator extends AbstractMOMoTValidator {
             var index = 0;
             for(p : transOrchestration.nonSolutionParameters.elements) {
                val name = p.interpret(typeof(String))
-               if(manager.getParameter(name) == null)
+               if(!parameterExists(manager, name))
                   error(
                   "Parameter '" + name + "' does not exist in the specified modules.", 
                      transOrchestration.nonSolutionParameters, 

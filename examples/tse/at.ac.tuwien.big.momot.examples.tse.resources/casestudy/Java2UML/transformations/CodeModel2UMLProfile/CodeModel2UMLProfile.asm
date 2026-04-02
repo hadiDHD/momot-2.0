@@ -2171,7 +2171,7 @@
 		<constant value="context"/>
 		<constant value="specification"/>
 		<constant value="typeConstraintExpression"/>
-		<constant value="not self.base_Type.oclIsUndefined() implies Set{uml::Stereotype,&#10;&#9;&#9;&#9;&#9;&#9;uml::Class, uml::Enumeration, uml::Interface}&#13;&#10;&#9;&#9;&#9;&#9;&#9; -&gt; includes(self.base_Type.oclType())"/>
+		<constant value="not self.base_Type.oclIsUndefined() implies Set{uml::Stereotype,&#10;&#9;&#9;&#9;&#9;&#9;uml::Class, uml::Enumeration, uml::Interface}&#10;&#9;&#9;&#9;&#9;&#9; -&gt; includes(self.base_Type.oclType())"/>
 		<constant value="body"/>
 		<constant value="OCL"/>
 		<constant value="language"/>
@@ -2192,7 +2192,7 @@
 		<constant value="createConstructorConstraint"/>
 		<constant value="constructorConstraint"/>
 		<constant value="constructorConstraintExpression"/>
-		<constant value="not self.base_Operation.oclIsUndefined() implies&#10;&#9;&#9;&#9;&#9;&#9;self.base_Operation.name =&#13;&#10;&#9;&#9;&#9;&#9;     self.base_Operation.oclContainer().oclAsType(uml::Classifier).name"/>
+		<constant value="not self.base_Operation.oclIsUndefined() implies&#10;&#9;&#9;&#9;&#9;&#9;self.base_Operation.name =&#10;&#9;&#9;&#9;&#9;     self.base_Operation.oclContainer().oclAsType(uml::Classifier).name"/>
 		<constant value="1077:12-1077:35"/>
 		<constant value="1077:4-1077:35"/>
 		<constant value="1078:26-1078:36"/>
@@ -2210,7 +2210,7 @@
 		<constant value="createMethodConstraint"/>
 		<constant value="methodConstraint"/>
 		<constant value="methodConstraintExpression"/>
-		<constant value="not self.base_Property.oclIsUndefined() implies&#13;&#10;&#9;&#9;&#9;&#9;&#9; self.base_Property.oclContainer().oclIsTypeOf(uml::Stereotype)"/>
+		<constant value="not self.base_Property.oclIsUndefined() implies&#10;&#9;&#9;&#9;&#9;&#9; self.base_Property.oclContainer().oclIsTypeOf(uml::Stereotype)"/>
 		<constant value="1103:12-1103:30"/>
 		<constant value="1103:4-1103:30"/>
 		<constant value="1104:26-1104:36"/>

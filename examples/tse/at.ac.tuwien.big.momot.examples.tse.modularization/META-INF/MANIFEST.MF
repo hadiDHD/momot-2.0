@@ -6,15 +6,11 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: at.ac.tuwien.big.momot.examples.tse.modularization,
  at.ac.tuwien.big.momot.examples.tse.modularization.impl,
  at.ac.tuwien.big.momot.examples.tse.modularization.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.ocl.examples.library;visibility:=reexport,
- org.eclipse.ocl.examples.pivot;visibility:=reexport,
- org.eclipse.ocl.examples.codegen;visibility:=reexport,
- org.eclipse.emf.ecore.xmi;visibility:=reexport,
- org.eclipse.emf.emfstore.common
+ org.eclipse.emf.ecore.xmi;visibility:=reexport
 Bundle-ActivationPolicy: lazy
