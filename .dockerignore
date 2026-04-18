@@ -1,0 +1,10 @@
+**/node_modules
+**/.classpath
+**/.project
+**/.settings
+**/.idea
+**/.vscode
+.git
+.gitignore
+build.log
+*.iml
