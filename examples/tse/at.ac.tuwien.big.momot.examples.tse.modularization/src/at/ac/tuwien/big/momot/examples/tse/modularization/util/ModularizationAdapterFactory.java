@@ -9,7 +9,13 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
 
-import at.ac.tuwien.big.momot.examples.tse.modularization.*;
+import at.ac.tuwien.big.momot.examples.tse.modularization.ModularizationPackage;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Rule;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Transformation;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Module;
+import at.ac.tuwien.big.momot.examples.tse.modularization.NamedElement;
+import at.ac.tuwien.big.momot.examples.tse.modularization.ModuleElement;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Helper;
 
 /**
  * <!-- begin-user-doc -->
@@ -76,7 +82,7 @@ public class ModularizationAdapterFactory extends AdapterFactoryImpl {
 				return createTransformationAdapter();
 			}
 			@Override
-			public Adapter caseModule(Module object) {
+			public Adapter caseModule(at.ac.tuwien.big.momot.examples.tse.modularization.Module object) {
 				return createModuleAdapter();
 			}
 			@Override

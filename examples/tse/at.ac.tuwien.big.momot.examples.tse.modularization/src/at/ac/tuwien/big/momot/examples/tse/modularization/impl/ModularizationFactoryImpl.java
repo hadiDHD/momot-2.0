@@ -10,7 +10,12 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
-import at.ac.tuwien.big.momot.examples.tse.modularization.*;
+import at.ac.tuwien.big.momot.examples.tse.modularization.ModularizationFactory;
+import at.ac.tuwien.big.momot.examples.tse.modularization.ModularizationPackage;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Rule;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Transformation;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Module;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Helper;
 
 /**
  * <!-- begin-user-doc -->
@@ -90,7 +95,7 @@ public class ModularizationFactoryImpl extends EFactoryImpl implements Modulariz
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Module createModule() {
+	public at.ac.tuwien.big.momot.examples.tse.modularization.Module createModule() {
 		ModuleImpl module = new ModuleImpl();
 		return module;
 	}

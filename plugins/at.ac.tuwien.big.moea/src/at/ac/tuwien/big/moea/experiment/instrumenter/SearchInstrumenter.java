@@ -142,16 +142,11 @@ public class SearchInstrumenter extends Instrumenter {
       parents.push(object);
 
       for(final Field field : type.getDeclaredFields()) {
-         field.setAccessible(true);
-
          try {
+            field.setAccessible(true);
             instrument(algorithm, collectors, visited, parents, field.get(object), null);
-         } catch(final IllegalArgumentException e) {
-            // should never occur since object is of the specified type
-            e.printStackTrace();
-         } catch(final IllegalAccessException e) {
-            // should never occur after setting field.setAccessible(true)
-            e.printStackTrace();
+         } catch(final Exception e) {
+            // Catch InaccessibleObjectException (Java 9+) and other access issues silently
          }
       }
 

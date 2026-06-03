@@ -21,7 +21,9 @@ import at.ac.tuwien.big.momot.search.fitness.dimension.TransformationLengthDimen
 import at.ac.tuwien.big.momot.search.solution.repair.ITransformationRepairer;
 import at.ac.tuwien.big.momot.search.solution.repair.TransformationPlaceholderRepairer;
 import at.ac.tuwien.big.momot.util.MomotUtil;
+import java.io.File;
 import java.util.Arrays;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.ocl.ParserException;
@@ -33,34 +35,34 @@ import org.moeaframework.util.progress.ProgressListener;
 
 @SuppressWarnings("all")
 public class Refactoring {
-  protected final static String INITIAL_MODEL = "model/SeveralRefactorings.xmi";
-  
-  protected final static int SOLUTION_LENGTH = 10;
-  
+  protected static final String INITIAL_MODEL = "model/SeveralRefactorings.xmi";
+
+  protected static final int SOLUTION_LENGTH = 10;
+
   protected final String[] modules = new String[] { "model/Refactoring.henshin" };
-  
+
   protected final ITransformationRepairer solutionRepairer = new TransformationPlaceholderRepairer();
-  
+
   protected final int populationSize = 50;
-  
+
   protected final int maxEvaluations = 1500;
-  
+
   protected final int nrRuns = 30;
-  
+
   protected String baseName;
-  
+
   protected IFitnessDimension<TransformationSolution> _createObjectiveHelper_0() {
     TransformationLengthDimension _transformationLengthDimension = new TransformationLengthDimension();
     return _transformationLengthDimension;
   }
-  
+
   protected IFitnessDimension<TransformationSolution> _createObjective_0(final TransformationSearchOrchestration orchestration) {
     IFitnessDimension<TransformationSolution> dimension = _createObjectiveHelper_0();
     dimension.setName("SolutionLength");
     dimension.setFunctionType(at.ac.tuwien.big.moea.search.fitness.dimension.IFitnessDimension.FunctionType.Minimum);
     return dimension;
   }
-  
+
   protected IFitnessDimension<TransformationSolution> _createObjective_1(final TransformationSearchOrchestration orchestration) {
     try {
        return new OCLQueryDimension("ContentSize", at.ac.tuwien.big.moea.search.fitness.dimension.IFitnessDimension.FunctionType.Minimum, "properties->size() * 1.1 + entities->size()", orchestration.createOCLHelper());
@@ -69,13 +71,15 @@ public class Refactoring {
     }
     return null;
   }
-  
+
   protected ModuleManager createModuleManager() {
     ModuleManager manager = new ModuleManager();
-    manager.addModules(modules);
+    for(String module : modules) {
+       manager.addModule(URI.createFileURI(new File(module).getPath().toString()).toString());
+    }
     return manager;
   }
-  
+
   protected IEGraphMultiDimensionalFitnessFunction createFitnessFunction(final TransformationSearchOrchestration orchestration) {
     IEGraphMultiDimensionalFitnessFunction function = new EGraphMultiDimensionalFitnessFunction();
     function.addObjective(_createObjective_0(orchestration));
@@ -83,7 +87,7 @@ public class Refactoring {
     function.setSolutionRepairer(solutionRepairer);
     return function;
   }
-  
+
   protected IRegisteredAlgorithm<NSGAII> _createRegisteredAlgorithm_0(final TransformationSearchOrchestration orchestration, final EvolutionaryAlgorithmFactory<TransformationSolution> moea, final LocalSearchAlgorithmFactory<TransformationSolution> local) {
     TournamentSelection _tournamentSelection = new TournamentSelection(2);
     OnePointCrossover _onePointCrossover = new OnePointCrossover(1.0);
@@ -91,7 +95,7 @@ public class Refactoring {
     IRegisteredAlgorithm<NSGAII> _createNSGAII = moea.createNSGAII(_tournamentSelection, _onePointCrossover, _transformationPlaceholderMutation);
     return _createNSGAII;
   }
-  
+
   protected IRegisteredAlgorithm<NSGAII> _createRegisteredAlgorithm_1(final TransformationSearchOrchestration orchestration, final EvolutionaryAlgorithmFactory<TransformationSolution> moea, final LocalSearchAlgorithmFactory<TransformationSolution> local) {
     TournamentSelection _tournamentSelection = new TournamentSelection(2);
     OnePointCrossover _onePointCrossover = new OnePointCrossover(1.0);
@@ -99,17 +103,17 @@ public class Refactoring {
     IRegisteredAlgorithm<NSGAII> _createNSGAIII = moea.createNSGAIII(_tournamentSelection, _onePointCrossover, _transformationPlaceholderMutation);
     return _createNSGAIII;
   }
-  
+
   protected ProgressListener _createListener_0() {
     SeedRuntimePrintListener _seedRuntimePrintListener = new SeedRuntimePrintListener();
     return _seedRuntimePrintListener;
   }
-  
+
   protected EGraph createInputGraph(final String initialGraph, final ModuleManager moduleManager) {
     EGraph graph = moduleManager.loadGraph(initialGraph);
     return graph;
   }
-  
+
   protected TransformationSearchOrchestration createOrchestration(final String initialGraph, final int solutionLength) {
     TransformationSearchOrchestration orchestration = new TransformationSearchOrchestration();
     ModuleManager moduleManager = createModuleManager();
@@ -126,14 +130,14 @@ public class Refactoring {
     
     return orchestration;
   }
-  
+
   protected SearchExperiment<TransformationSolution> createExperiment(final TransformationSearchOrchestration orchestration) {
     SearchExperiment<TransformationSolution> experiment = new SearchExperiment<TransformationSolution>(orchestration, maxEvaluations);
     experiment.setNumberOfRuns(nrRuns);
     experiment.addProgressListener(_createListener_0());
     return experiment;
   }
-  
+
   protected void deriveBaseName(final TransformationSearchOrchestration orchestration) {
     EObject root = MomotUtil.getRoot(orchestration.getProblemGraph());
     if(root == null || root.eResource() == null || root.eResource().getURI() == null)
@@ -141,7 +145,7 @@ public class Refactoring {
     else
     	baseName = root.eResource().getURI().trimFileExtension().lastSegment();
   }
-  
+
   protected TransformationResultManager handleResults(final SearchExperiment<TransformationSolution> experiment) {
     ISolutionWriter<TransformationSolution> solutionWriter = experiment.getSearchOrchestration().createSolutionWriter();
     IPopulationWriter<TransformationSolution> populationWriter = experiment.getSearchOrchestration().createPopulationWriter();
@@ -166,7 +170,7 @@ public class Refactoring {
     
     return resultManager;
   }
-  
+
   public void printSearchInfo(final TransformationSearchOrchestration orchestration) {
     System.out.println("-------------------------------------------------------");
     System.out.println("Search");
@@ -185,7 +189,7 @@ public class Refactoring {
     System.out.println("AlgorithmRuns:   " + nrRuns);
     System.out.println("---------------------------");
   }
-  
+
   public void performSearch(final String initialGraph, final int solutionLength) {
     TransformationSearchOrchestration orchestration = createOrchestration(initialGraph, solutionLength);
     deriveBaseName(orchestration);
@@ -197,11 +201,11 @@ public class Refactoring {
     System.out.println("-------------------------------------------------------");
     handleResults(experiment);
   }
-  
+
   public static void initialization() {
     RefactoringPackage.eINSTANCE.eClass();
   }
-  
+
   public static void main(final String... args) {
     initialization();
     Refactoring search = new Refactoring();

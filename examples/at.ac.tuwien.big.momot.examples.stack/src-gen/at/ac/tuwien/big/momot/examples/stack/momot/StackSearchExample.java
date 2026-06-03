@@ -34,8 +34,7 @@ import at.ac.tuwien.big.momot.util.MomotUtil;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.henshin.interpreter.EGraph;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -49,85 +48,82 @@ import org.moeaframework.util.progress.ProgressListener;
 
 @SuppressWarnings("all")
 public class StackSearchExample {
-  protected final static String INITIAL_MODEL = "model/input/model/model_five_stacks.xmi";
-  
-  protected final static int SOLUTION_LENGTH = 8;
-  
+  protected static final String INITIAL_MODEL = "model/input/model/model_five_stacks.xmi";
+
+  protected static final int SOLUTION_LENGTH = 8;
+
   protected final String[] modules = new String[] { "model/stack.henshin" };
-  
+
   protected final String[] unitsToRemove = new String[] { StackModule.CreateStack.NAME, StackModule.ConnectStacks.NAME };
-  
+
   protected final String _parameterValueKey_0 = StackModule.ShiftLeft.Parameter.AMOUNT;
-  
+
   protected final String _parameterValueKey_1 = StackModule.ShiftRight.Parameter.AMOUNT;
-  
+
   protected final String[] nonSolutionParameters = new String[] { StackModule.ShiftLeft.Parameter.FROM_LOAD, StackModule.ShiftLeft.Parameter.TO_LOAD, StackModule.ShiftRight.Parameter.FROM_LOAD, StackModule.ShiftRight.Parameter.TO_LOAD };
-  
+
   protected final ITransformationRepairer solutionRepairer = new TransformationPlaceholderRepairer();
-  
+
   protected final int populationSize = 100;
-  
+
   protected final int maxEvaluations = 2000;
-  
+
   protected final int nrRuns = 5;
-  
+
   protected String baseName;
-  
+
   protected IParameterValue<?> _createParameterValue_0() {
     RandomIntegerValue _randomIntegerValue = new RandomIntegerValue(1, 5);
     return _randomIntegerValue;
   }
-  
+
   protected IParameterValue<?> _createParameterValue_1() {
     RandomIntegerValue _randomIntegerValue = new RandomIntegerValue(1, 5);
     return _randomIntegerValue;
   }
-  
+
   protected double _createObjectiveHelper_0(final TransformationSolution solution, final EGraph graph, final EObject root) {
-    EList<Stack> _stacks = ((StackModel) root).getStacks();
-    final Function1<Stack, Integer> _function = new Function1<Stack, Integer>() {
-      @Override
-      public Integer apply(final Stack it) {
-        return Integer.valueOf(it.getLoad());
-      }
+    final Function1<Stack, Integer> _function = (Stack it) -> {
+      return Integer.valueOf(it.getLoad());
     };
-    List<Integer> _map = ListExtensions.<Stack, Integer>map(_stacks, _function);
-    return MathUtil.getStandardDeviation(_map);
+    return MathUtil.getStandardDeviation(ListExtensions.<Stack, Integer>map(((StackModel) root).getStacks(), _function));
   }
-  
+
   protected IFitnessDimension<TransformationSolution> _createObjective_0(final TransformationSearchOrchestration orchestration) {
     return new AbstractEGraphFitnessDimension("StandardDeviation", at.ac.tuwien.big.moea.search.fitness.dimension.IFitnessDimension.FunctionType.Minimum) {
        @Override
        protected double internalEvaluate(TransformationSolution solution) {
-    		EGraph graph = solution.execute();
+          EGraph graph = solution.execute();
           EObject root = MomotUtil.getRoot(graph);
           return _createObjectiveHelper_0(solution, graph, root);
        }
     };
   }
-  
+
   protected IFitnessDimension<TransformationSolution> _createObjectiveHelper_1() {
     TransformationLengthDimension _transformationLengthDimension = new TransformationLengthDimension();
     return _transformationLengthDimension;
   }
-  
+
   protected IFitnessDimension<TransformationSolution> _createObjective_1(final TransformationSearchOrchestration orchestration) {
     IFitnessDimension<TransformationSolution> dimension = _createObjectiveHelper_1();
     dimension.setName("SolutionLength");
     dimension.setFunctionType(at.ac.tuwien.big.moea.search.fitness.dimension.IFitnessDimension.FunctionType.Minimum);
     return dimension;
   }
-  
+
   protected ModuleManager createModuleManager() {
     ModuleManager manager = new ModuleManager();
-    manager.addModules(modules);
+    for(String module : modules) {
+       manager.addModule(URI.createFileURI(new File(module).getPath().toString()).toString());
+    }
     manager.removeUnits(unitsToRemove);
     manager.addNonSolutionParameters(nonSolutionParameters);
     manager.setParameterValue(_parameterValueKey_0, _createParameterValue_0());
     manager.setParameterValue(_parameterValueKey_1, _createParameterValue_1());
     return manager;
   }
-  
+
   protected IEGraphMultiDimensionalFitnessFunction createFitnessFunction(final TransformationSearchOrchestration orchestration) {
     IEGraphMultiDimensionalFitnessFunction function = new EGraphMultiDimensionalFitnessFunction();
     function.addObjective(_createObjective_0(orchestration));
@@ -135,12 +131,12 @@ public class StackSearchExample {
     function.setSolutionRepairer(solutionRepairer);
     return function;
   }
-  
+
   protected IRegisteredAlgorithm<RandomSearch> _createRegisteredAlgorithm_0(final TransformationSearchOrchestration orchestration, final EvolutionaryAlgorithmFactory<TransformationSolution> moea, final LocalSearchAlgorithmFactory<TransformationSolution> local) {
     IRegisteredAlgorithm<RandomSearch> _createRandomSearch = moea.createRandomSearch();
     return _createRandomSearch;
   }
-  
+
   protected IRegisteredAlgorithm<NSGAII> _createRegisteredAlgorithm_1(final TransformationSearchOrchestration orchestration, final EvolutionaryAlgorithmFactory<TransformationSolution> moea, final LocalSearchAlgorithmFactory<TransformationSolution> local) {
     TournamentSelection _tournamentSelection = new TournamentSelection(2);
     OnePointCrossover _onePointCrossover = new OnePointCrossover(1.0);
@@ -150,7 +146,7 @@ public class StackSearchExample {
     IRegisteredAlgorithm<NSGAII> _createNSGAII = moea.createNSGAII(_tournamentSelection, _onePointCrossover, _transformationPlaceholderMutation, _transformationParameterMutation);
     return _createNSGAII;
   }
-  
+
   protected IRegisteredAlgorithm<NSGAII> _createRegisteredAlgorithm_2(final TransformationSearchOrchestration orchestration, final EvolutionaryAlgorithmFactory<TransformationSolution> moea, final LocalSearchAlgorithmFactory<TransformationSolution> local) {
     TournamentSelection _tournamentSelection = new TournamentSelection(2);
     OnePointCrossover _onePointCrossover = new OnePointCrossover(1.0);
@@ -161,17 +157,17 @@ public class StackSearchExample {
       4, _tournamentSelection, _onePointCrossover, _transformationPlaceholderMutation, _transformationParameterMutation);
     return _createNSGAIII;
   }
-  
+
   protected ProgressListener _createListener_0() {
     SeedRuntimePrintListener _seedRuntimePrintListener = new SeedRuntimePrintListener();
     return _seedRuntimePrintListener;
   }
-  
+
   protected EGraph createInputGraph(final String initialGraph, final ModuleManager moduleManager) {
     EGraph graph = moduleManager.loadGraph(initialGraph);
     return graph;
   }
-  
+
   protected TransformationSearchOrchestration createOrchestration(final String initialGraph, final int solutionLength) {
     TransformationSearchOrchestration orchestration = new TransformationSearchOrchestration();
     ModuleManager moduleManager = createModuleManager();
@@ -189,14 +185,14 @@ public class StackSearchExample {
     
     return orchestration;
   }
-  
+
   protected SearchExperiment<TransformationSolution> createExperiment(final TransformationSearchOrchestration orchestration) {
     SearchExperiment<TransformationSolution> experiment = new SearchExperiment<TransformationSolution>(orchestration, maxEvaluations);
     experiment.setNumberOfRuns(nrRuns);
     experiment.addProgressListener(_createListener_0());
     return experiment;
   }
-  
+
   protected void deriveBaseName(final TransformationSearchOrchestration orchestration) {
     EObject root = MomotUtil.getRoot(orchestration.getProblemGraph());
     if(root == null || root.eResource() == null || root.eResource().getURI() == null)
@@ -204,9 +200,9 @@ public class StackSearchExample {
     else
     	baseName = root.eResource().getURI().trimFileExtension().lastSegment();
   }
-  
+
   protected double significanceLevel = 0.01;
-  
+
   protected SearchAnalyzer performAnalysis(final SearchExperiment<TransformationSolution> experiment) {
     SearchAnalysis analysis = new SearchAnalysis(experiment);
     analysis.setAdditiveEpsilonIndicator(true);
@@ -235,7 +231,7 @@ public class StackSearchExample {
     );
     return searchAnalyzer;
   }
-  
+
   protected TransformationResultManager handleResults(final SearchExperiment<TransformationSolution> experiment) {
     ISolutionWriter<TransformationSolution> solutionWriter = experiment.getSearchOrchestration().createSolutionWriter();
     IPopulationWriter<TransformationSolution> populationWriter = experiment.getSearchOrchestration().createPopulationWriter();
@@ -396,7 +392,7 @@ public class StackSearchExample {
     
     return resultManager;
   }
-  
+
   public void printSearchInfo(final TransformationSearchOrchestration orchestration) {
     System.out.println("-------------------------------------------------------");
     System.out.println("Search");
@@ -415,7 +411,7 @@ public class StackSearchExample {
     System.out.println("AlgorithmRuns:   " + nrRuns);
     System.out.println("---------------------------");
   }
-  
+
   public void performSearch(final String initialGraph, final int solutionLength) {
     TransformationSearchOrchestration orchestration = createOrchestration(initialGraph, solutionLength);
     deriveBaseName(orchestration);
@@ -431,11 +427,11 @@ public class StackSearchExample {
     System.out.println("-------------------------------------------------------");
     handleResults(experiment);
   }
-  
+
   public static void initialization() {
     StackPackage.eINSTANCE.getClass();
   }
-  
+
   public static void main(final String... args) {
     initialization();
     StackSearchExample search = new StackSearchExample();

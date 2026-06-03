@@ -1,0 +1,101 @@
+Population with 4 solution(s):
+
+------------------
+Solution 1/4
+------------------
+Number of variables: 6
+  Variable[0]: Assignment for unit 'remove_empty_sub_eclass':
+
+  Variable[1]: -Placeholder-
+
+  Variable[2]: -Placeholder-
+
+  Variable[3]: Assignment for unit 'remove_empty_sub_eclass':
+
+  Variable[4]: Assignment for unit 'remove_empty_sub_eclass':
+
+  Variable[5]: -Placeholder-
+
+Number of attributes: 3
+  AggregatedFitness: 4.0
+  rank: 0
+  crowdingDistance: Infinity
+Number of objectives: 2
+  SolutionLength: 3.0
+  Sum: 1.0
+Number of constraints: 0
+
+------------------
+Solution 2/4
+------------------
+Number of variables: 6
+  Variable[0]: -Placeholder-
+
+  Variable[1]: -Placeholder-
+
+  Variable[2]: -Placeholder-
+
+  Variable[3]: -Placeholder-
+
+  Variable[4]: -Placeholder-
+
+  Variable[5]: -Placeholder-
+
+Number of attributes: 3
+  AggregatedFitness: 4.0
+  rank: 0
+  crowdingDistance: Infinity
+Number of objectives: 2
+  SolutionLength: 0.0
+  Sum: 4.0
+Number of constraints: 0
+
+------------------
+Solution 3/4
+------------------
+Number of variables: 6
+  Variable[0]: -Placeholder-
+
+  Variable[1]: -Placeholder-
+
+  Variable[2]: -Placeholder-
+
+  Variable[3]: -Placeholder-
+
+  Variable[4]: -Placeholder-
+
+  Variable[5]: Assignment for unit 'remove_empty_sub_eclass':
+
+Number of attributes: 3
+  AggregatedFitness: 4.0
+  rank: 0
+  crowdingDistance: 1.3333333333333333
+Number of objectives: 2
+  SolutionLength: 1.0
+  Sum: 3.0
+Number of constraints: 0
+
+------------------
+Solution 4/4
+------------------
+Number of variables: 6
+  Variable[0]: -Placeholder-
+
+  Variable[1]: -Placeholder-
+
+  Variable[2]: Assignment for unit 'remove_empty_sub_eclass':
+
+  Variable[3]: -Placeholder-
+
+  Variable[4]: -Placeholder-
+
+  Variable[5]: Assignment for unit 'remove_empty_sub_eclass':
+
+Number of attributes: 3
+  AggregatedFitness: 4.0
+  rank: 0
+  crowdingDistance: 1.3333333333333333
+Number of objectives: 2
+  SolutionLength: 2.0
+  Sum: 2.0
+Number of constraints: 0

@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext.common.types.ui,
  org.eclipse.xtext.ui.codetemplates.ui,
  com.google.inject,
- at.ac.tuwien.big.momot.lang
+ at.ac.tuwien.big.momot.lang,
+ org.eclipse.help
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Export-Package: at.ac.tuwien.big.momot.lang.ui.quickfix,

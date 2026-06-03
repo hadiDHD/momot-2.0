@@ -125,6 +125,6 @@ public class RefactorSearch {
    public static void main(final String[] args) {
       UMLFactory.eINSTANCE.eClass();
       EcoreFactory.eINSTANCE.eClass();
-      executeSearch("model/input/simple_example.ecore", null, 6);
+      executeSearch("model/input/metamodel.ecore", null, 6);
    }
 }

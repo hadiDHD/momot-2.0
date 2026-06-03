@@ -9,7 +9,13 @@ import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 
-import at.ac.tuwien.big.momot.examples.tse.modularization.*;
+import at.ac.tuwien.big.momot.examples.tse.modularization.ModularizationPackage;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Rule;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Transformation;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Module;
+import at.ac.tuwien.big.momot.examples.tse.modularization.NamedElement;
+import at.ac.tuwien.big.momot.examples.tse.modularization.ModuleElement;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Helper;
 
 /**
  * <!-- begin-user-doc -->
@@ -88,7 +94,7 @@ public class ModularizationValidator extends EObjectValidator {
 			case ModularizationPackage.TRANSFORMATION:
 				return validateTransformation((Transformation)value, diagnostics, context);
 			case ModularizationPackage.MODULE:
-				return validateModule((Module)value, diagnostics, context);
+				return validateModule((at.ac.tuwien.big.momot.examples.tse.modularization.Module)value, diagnostics, context);
 			case ModularizationPackage.NAMED_ELEMENT:
 				return validateNamedElement((NamedElement)value, diagnostics, context);
 			case ModularizationPackage.MODULE_ELEMENT:
@@ -123,7 +129,7 @@ public class ModularizationValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateModule(Module module, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validateModule(at.ac.tuwien.big.momot.examples.tse.modularization.Module module, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		if (!validate_NoCircularContainment(module, diagnostics, context)) return false;
 		boolean result = validate_EveryMultiplicityConforms(module, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(module, diagnostics, context);
@@ -151,7 +157,7 @@ public class ModularizationValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateModule_notEmpty(Module module, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validateModule_notEmpty(at.ac.tuwien.big.momot.examples.tse.modularization.Module module, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return
 			validate
 				(ModularizationPackage.Literals.MODULE,

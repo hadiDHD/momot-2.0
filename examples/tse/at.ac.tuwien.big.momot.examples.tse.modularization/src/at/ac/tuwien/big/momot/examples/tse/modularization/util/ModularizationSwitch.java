@@ -7,7 +7,13 @@ import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
 
-import at.ac.tuwien.big.momot.examples.tse.modularization.*;
+import at.ac.tuwien.big.momot.examples.tse.modularization.ModularizationPackage;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Rule;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Transformation;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Module;
+import at.ac.tuwien.big.momot.examples.tse.modularization.NamedElement;
+import at.ac.tuwien.big.momot.examples.tse.modularization.ModuleElement;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Helper;
 
 /**
  * <!-- begin-user-doc -->
@@ -82,7 +88,7 @@ public class ModularizationSwitch<T> extends Switch<T> {
 				return result;
 			}
 			case ModularizationPackage.MODULE: {
-				Module module = (Module)theEObject;
+				at.ac.tuwien.big.momot.examples.tse.modularization.Module module = (at.ac.tuwien.big.momot.examples.tse.modularization.Module)theEObject;
 				T result = caseModule(module);
 				if (result == null) result = caseNamedElement(module);
 				if (result == null) result = defaultCase(theEObject);
@@ -154,7 +160,7 @@ public class ModularizationSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseModule(Module object) {
+	public T caseModule(at.ac.tuwien.big.momot.examples.tse.modularization.Module object) {
 		return null;
 	}
 

@@ -3,6 +3,7 @@
 package at.ac.tuwien.big.momot.examples.tse.modularization;
 
 import org.eclipse.emf.ecore.EFactory;
+import at.ac.tuwien.big.momot.examples.tse.modularization.Module;
 
 /**
  * <!-- begin-user-doc -->
@@ -46,7 +47,7 @@ public interface ModularizationFactory extends EFactory {
 	 * @return a new object of class '<em>Module</em>'.
 	 * @generated
 	 */
-	Module createModule();
+	at.ac.tuwien.big.momot.examples.tse.modularization.Module createModule();
 
 	/**
 	 * Returns a new object of class '<em>Helper</em>'.
